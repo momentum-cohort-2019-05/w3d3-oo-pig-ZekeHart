@@ -31,7 +31,7 @@ class Gamecon:
         """
         temp_score = 0
         d6 = Dice()
-        
+        roller = self.players_list[player-1]
         roll_on = True
         while roll_on == True:
             current_roll =0
@@ -41,7 +41,7 @@ class Gamecon:
                 print("Better luck next time.")
                 return 0
             temp_score += current_roll
-            roll_on = player.make_choice(temp_score)
+            roll_on = roller.make_choice(temp_score)
         return temp_score
 
     def choose_first_player(self):
@@ -50,9 +50,10 @@ class Gamecon:
         """
         game_start_int = Dice(len(self.players_list)).roll()
         print(game_start_int)
-        first_player_turn = self.players_list[game_start_int-1]
+        # first_player_turn = self.players_list[game_start_int-1]
         print(f"Player {game_start_int} goes first.")
-        return first_player_turn
+        # return first_player_turn
+        return game_start_int
 
 
     def game_state(self):
@@ -60,8 +61,14 @@ class Gamecon:
         detects if a player has won the game, stores  current_scores
         """
         total_score_dict = {}
-        for player in self.players_list:
-            total_score_dict[1] = 0
+        for player in range(len(self.players_list)):
+            total_score_dict[player] = [(player+1), 0]
+        print("score dict:", total_score_dict)
         first_player = self.choose_first_player()
-        self.player_turn(first_player)
+        current_player = first_player
+        print("current player: ", current_player)
+        turn_score = self.player_turn(current_player)
+        print("turn score =:", turn_score)
+        total_score_dict[player] += turn_score
+        print(total_score_dict)
         # print("this?", first_player)
