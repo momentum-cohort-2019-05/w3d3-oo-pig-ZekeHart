@@ -62,7 +62,7 @@ class Gamecon:
         """
         total_score_dict = {}
         for player in range(len(self.players_list)):
-            total_score_dict[player] = [(player+1), 0]
+            total_score_dict[player] = 0
         print("score dict:", total_score_dict)
         first_player = self.choose_first_player()
         current_player = first_player
