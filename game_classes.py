@@ -8,6 +8,7 @@ class Player:
 
     def make_choice(self, temp_score):
         if not self.is_person:
+            print(f"NPC current temp score is {temp_score}")
             if temp_score < 20:
                 return True
             False
@@ -19,8 +20,8 @@ class Player:
 
 class Gamecon:
 
-    def __init__(self):
-        pass
+    def __init__(self, players_list):
+        self.players_list = players_list
     
     def player_turn(self, player, total_score=0):
         """
@@ -43,21 +44,24 @@ class Gamecon:
             roll_on = player.make_choice(temp_score)
         return temp_score
 
-    def choose_first_player(self, players_list):
+    def choose_first_player(self):
         """
         initializes the game, rolls a die to determine who goes first.
         """
-        game_start_int = Dice(len(players_list)).roll()
+        game_start_int = Dice(len(self.players_list)).roll()
         print(game_start_int)
-        first_player_turn = players_list[game_start_int-1]
+        first_player_turn = self.players_list[game_start_int-1]
         print(f"Player {game_start_int} goes first.")
-        return self.player_turn(first_player_turn)
+        return first_player_turn
 
 
-    def game_state(self, total_score_dict, players_list):
+    def game_state(self):
         """
         detects if a player has won the game, stores  current_scores
         """
         total_score_dict = {}
-        for player in players_list:
+        for player in self.players_list:
             total_score_dict[1] = 0
+        first_player = self.choose_first_player()
+        self.player_turn(first_player)
+        # print("this?", first_player)
