@@ -13,8 +13,11 @@ class Player:
                 return True
             False
         else:
-            keep_rolling = "p"
-            while keep_rolling[0].lower() != "y" and keep_rolling[0].lower() != "n":
+            keep_rolling = None
+            # keep_rolling = 'p'
+            while keep_rolling is None or (keep_rolling[0].lower() != "y" and keep_rolling[0].lower() != "n"):
+            # while keep_rolling[0].lower() != "y" and keep_rolling[0].lower() != "n"):
+            # while not keep_rolling.lower().startswith("y", "Y") and not keep_rolling.lower().startswith("x", "X"):
                 keep_rolling = input(f"your current temp score is {temp_score} do you want to continue rolling? [y/n]")
             return keep_rolling.lower().startswith("y")
 
@@ -26,7 +29,7 @@ class Gamecon:
     def player_turn(self, player, total_score=0):
         """
         given a player it has the player roll, gets the result from Dice, stores the teporary score, displays
-         it to the player and if the player wants to roll again resrtarts that loop. Once the player's turn ends 
+         it to the player and if the player wants to roll again restarts that loop. Once the player's turn ends 
          it adds the temporary score to their total_score 
         """
         temp_score = 0
@@ -62,7 +65,7 @@ class Gamecon:
         """
         total_score_dict = {}
         for player in range(len(self.players_list)):
-            total_score_dict[player] = 0
+            total_score_dict[player + 1] = 0
         print("score dict:", total_score_dict)
         first_player = self.choose_first_player()
         current_player = first_player
